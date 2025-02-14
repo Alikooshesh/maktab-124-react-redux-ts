@@ -1,80 +1,24 @@
-import React, { createContext, useEffect, useReducer, useState } from 'react';
-import logo from './logo.svg';
+import { Button, Input } from '@chakra-ui/react';
 import './App.css';
-import User from './components/user';
-import axios from 'axios';
-
-interface Itodo {
-  createdAt: string | number,
-  title: string,
-  id: string | number
-}
-
-interface reducerAction {
-  type: "add" | "delete" | "update",
-  data: {
-    id?: string | number
-    title?: string
-    newTitle?: string
-  }
-}
 
 
 
-export const AppContext = createContext<{todoList : Itodo[],todoDispatch : Function} | null>(null)
-
-
-
-
-function todoReducer(state: Itodo[], action: reducerAction): Itodo[] {
-  switch (action.type) {
-    case "add":
-      const newTodo: Itodo = {
-        createdAt: Date.now(),
-        title: action.data.title ?? "",
-        id: Date.now()
-      }
-      return [...state, newTodo]
-
-    case "delete":
-      return state.filter(todo => todo.id !== action.data.id)
-
-    case "update":
-      return state.map(item => {
-        if (item.id === action.data.id) {
-          return { ...item, title: action.data.newTitle ?? "" }
-        }
-
-        return item
-      })
-  }
-}
 
 function App() {
 
-  const [state, todoDispatch] = useReducer(todoReducer, [])
-
-  const [todoInput, setTodoInput] = useState<string>("")
-
-  console.log({state})
 
   return (
     <>
-      <AppContext.Provider value={{todoList : state , todoDispatch}}>
-      <div>
-        <div>
-          <input
-            value={todoInput}
-            onChange={e => setTodoInput(e.target.value)}
-          />
-          <button onClick={() => {
-            todoDispatch({ type: "add", data: { title: todoInput } })
-            setTodoInput("")
-          }}>add</button>
-        </div>
-        <User/>
-      </div>
-      </AppContext.Provider>
+      <Button 
+        leftIcon={<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M6 2a.5.5 0 0 1 .47.33L10 12.036l1.53-4.208A.5.5 0 0 1 12 7.5h3.5a.5.5 0 0 1 0 1h-3.15l-1.88 5.17a.5.5 0 0 1-.94 0L6 3.964 4.47 8.171A.5.5 0 0 1 4 8.5H.5a.5.5 0 0 1 0-1h3.15l1.88-5.17A.5.5 0 0 1 6 2"/>
+        </svg>}
+        colorScheme='brand'
+      >
+        first button
+      </Button>
+
+      <Input placeholder='name'isInvalid={false} focusBorderColor='brand.400'/>
     </>
   );
 }
