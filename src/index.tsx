@@ -5,10 +5,12 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { ChakraProvider, extendTheme } from '@chakra-ui/react';
 import { BrowserRouter } from 'react-router';
+import { Provider } from 'react-redux';
+import store from './redux/store';
 
 const customTheme = extendTheme({
-  colors : {
-    brand : {
+  colors: {
+    brand: {
       50: "#f5f7ff",
       100: "#e0e7ff",
       200: "#c7d2fe",
@@ -28,11 +30,14 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <ChakraProvider theme={customTheme}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </ChakraProvider>
+    <Provider store={store}>
+      <ChakraProvider theme={customTheme}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </ChakraProvider>
+    </Provider>
+
   </React.StrictMode>
 );
 

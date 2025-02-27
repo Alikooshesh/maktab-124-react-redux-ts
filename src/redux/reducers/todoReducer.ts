@@ -1,11 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { Itodo } from "../../interfeaces/todo";
 
 const todoReducer = createSlice({
     name : "todos",
-    initialState : [],
+    initialState : [
+        {
+            id : 1,
+            title : "test"
+        }
+    ] as Itodo[],
     reducers : {
         add : (state,action)=>{
-            // @ts-ignore
+            console.log(action)
             state.push({...action.payload})
         }
     }
