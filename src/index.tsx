@@ -6,7 +6,8 @@ import reportWebVitals from './reportWebVitals';
 import { ChakraProvider, extendTheme } from '@chakra-ui/react';
 import { BrowserRouter } from 'react-router';
 import { Provider } from 'react-redux';
-import store from './redux/store';
+import store, { persistore } from './redux/store';
+import { PersistGate } from 'redux-persist/integration/react';
 
 const customTheme = extendTheme({
   colors: {
@@ -31,11 +32,13 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <ChakraProvider theme={customTheme}>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </ChakraProvider>
+      <PersistGate persistor={persistore}>
+        <ChakraProvider theme={customTheme}>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </ChakraProvider>
+      </PersistGate>
     </Provider>
 
   </React.StrictMode>
